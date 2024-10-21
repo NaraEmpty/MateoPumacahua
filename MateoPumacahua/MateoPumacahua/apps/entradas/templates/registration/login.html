@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/login.css' %}">
+</head>
+<body>
+    <div class="div">
+        <div class="parrafo_medio">
+            <p>INGRESA TU CODIGO DE ALUMNO / COLABORADOR EN LOS CAMPOS DE USUARIO Y CONTRASEÑA.</p>
+        <p>AL ACCEDER PODRAS:
+            -VER TUS NOTAS Y ASISTENCIA
+        </p>
+        </div>
+        
+    </div>
+    <div class="login-container">
+        <div class="logo">
+            <h1>MATEO LOGO</h1>
+        </div>
+        <h2>INICIAR SESIÓN</h2>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">INGRESAR USUARIO:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">INGRESAR CONTRASEÑA:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">INGRESAR</button>
+        </form>
+        <div class="help-links">
+            <a href="{% url 'password_reset' %}">OLVIDÉ CONTRASEÑA</a>
+            <a href="#">OLVIDÉ USUARIO</a>
+        </div>
+    </div>
+</body>
+</html>

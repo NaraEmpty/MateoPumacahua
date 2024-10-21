@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periódico Mateo Pumacahua</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/estilos.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>MP</h1>
+        </div>
+        <div class="titulo">
+            <h2>Periódico Mateo Pumacahua</h2>
+        </div>
+        <div class="buscador">
+            <input type="text" placeholder="Buscar...">
+            <button>🔍</button>
+        </div>
+        <div class="login-button">
+            {% if user.is_authenticated %}
+                <p>Bienvenido, {{ user.username }}</p>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-logout">Cerrar Sesión</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-login">Iniciar Sesión</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#" id="index-link">Inicio</a></li>
+                <li><a href="articulo2.html">Perfil</a></li>
+                <li><a href="#" id="asignaturas-link">Cursos</a></li>
+                <li><a href="articulo3.html">Mensajes</a></li>
+                <li><a href="#">Calificaciones</a></li>
+            </ul>
+        </aside>
+
+        <main class="contenido">
+            <h3>Eventos Próximos</h3>
+            <section class="eventos-proximos" id="eventos-proximos">
+                <button class="prev">⬅️</button>
+                <div class="eventos-container">
+                    {% for evento in entradas %}
+                    <div class="evento {% if forloop.first %}active{% endif %}">
+                        {% if evento.imagen %}
+                            <img src="{{ evento.imagen.url }}" alt="{{ evento.nombre }}">
+                        {% endif %}
+                        <h4>{{ evento.nombre }}</h4>
+                        <p>{{ evento.contenido|truncatewords:10 }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="next">➡️</button>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>©2024 Periódico Mateo Pumacahua</p>
+    </footer>
+
+    <script src="{% static 'js/evento_index.js' %}"></script>
+    <script src="{% static 'js/asignatura.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/historia.js' %}"></script>
+</body>
+</html>
